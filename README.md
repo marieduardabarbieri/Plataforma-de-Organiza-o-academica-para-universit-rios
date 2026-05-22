@@ -27,12 +27,11 @@ RNF04: A interface deve seguir princípios de acessibilidade.
 RNF05: O sistema deve possuir autenticação segura.
 
 ## Tecnologias
-React
 
 Node.js
 
-Express
+Postgres
 
-MongoDB
+Fastfy
 
 Figma

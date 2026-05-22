@@ -1,0 +1,28 @@
+// tsconfig.json
+{
+  // Define o esquema de validação para que o VS Code ofereça autocompletar e dicas
+  "$schema": "https://json.schemastore.org/tsconfig",
+
+  "compilerOptions": {
+    // Especifica qual sistema de módulos o TypeScript deve usar (NodeNext é o padrão moderno para Node.js)
+    "module": "nodenext",
+
+    // Determina como o TypeScript deve procurar os arquivos importados (compatível com módulos ESM do Node)
+    "moduleResolution": "nodenext",
+
+    // Define a versão do JavaScript para a qual o código será convertido (ES2024 suporta as funcionalidades mais recentes)
+    "target": "es2024",
+
+    // Pula a verificação de tipos em bibliotecas externas (acelera o tempo de compilação)
+    "skipLibCheck": true,
+
+    // Habilita todas as verificações rigorosas de tipo para garantir maior segurança no código
+    "strict": true,
+
+    // Define a pasta onde os arquivos JavaScript compilados serão salvos
+    "outDir": "./dist"
+  },
+
+  // Especifica quais pastas ou arquivos o TypeScript deve incluir no processo de compilação
+  "include": ["src"]
+}

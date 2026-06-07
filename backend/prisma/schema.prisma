@@ -4,11 +4,66 @@
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
 // prisma/schema.prisma
+//O Prisma gera automaticamente código para você acessar o banco.
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
 }
 
+//Define qual banco será utilizado.
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+//Cria um conjunto fixo de opções.
+enum PriorityLevel {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+//Representa o estudante.
+model User {
+  id        String    @id @default(uuid())
+  name      String
+  email     String    @unique //O @unique impede dois usuários com o mesmo email.
+  password  String
+  subjects  Subject[]
+  tasks     Task[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("users")
+}
+
+//Representa disciplinas.
+model Subject {
+  id        String   @id @default(uuid())
+  name      String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  tasks     Task[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("subjects")
+}
+
+model Task {
+  id               String        @id @default(uuid())
+  title            String
+  description      String?
+  completed        Boolean       @default(false)
+  dueDate          DateTime?
+  notificationSent Boolean       @default(false)
+  priority         PriorityLevel
+  userId           String
+  user             User          @relation(fields: [userId], references: [id])
+  subjectId        String?
+  subject          Subject?      @relation(fields: [subjectId], references: [id])
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  @@map("tasks")
 }

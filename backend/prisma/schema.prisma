@@ -13,7 +13,6 @@ generator client {
 //Define qual banco será utilizado.
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 //Cria um conjunto fixo de opções.

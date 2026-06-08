@@ -1,8 +1,10 @@
 // src/index.ts
 import "dotenv/config";
 
+import fastifyCors from "@fastify/cors";
 import fastifySwagger from "@fastify/swagger";
 import ScalarApiReference from "@scalar/fastify-api-reference";
+import { fromNodeHeaders } from "better-auth/node";
 import Fastify from "fastify";
 import {
   serializerCompiler,
@@ -10,6 +12,8 @@ import {
   ZodTypeProvider,
 } from "fastify-type-provider-zod";
 import z from "zod";
+
+import { auth } from "./lib/auth.js";
 
 const app = Fastify({
   logger: true,
@@ -21,8 +25,9 @@ app.setSerializerCompiler(serializerCompiler);
 await app.register(fastifySwagger, {
   openapi: {
     info: {
-      title: "Fit AI API",
-      description: "API para gerenciamento de treinos e exercícios",
+      title: "Academic Organizer API",
+      description:
+        "API para gerenciamento de tarefas, disciplinas e rotina acadêmica",
       version: "1.0.0",
     },
     servers: [
@@ -35,14 +40,19 @@ await app.register(fastifySwagger, {
   transform: jsonSchemaTransform,
 });
 
+await app.register(fastifyCors, {
+  origin: ["http://localhost:3000"],
+  credentials: true,
+});
+
 await app.register(ScalarApiReference, {
   routePrefix: "/docs",
   configuration: {
     theme: "elysiajs",
     sources: [
       {
-        title: "Fit AI API",
-        slug: "fit-ai-api",
+        title: "Academic Organizer API",
+        slug: "academic-ai-api",
         url: "/swagger.json",
       },
     ],

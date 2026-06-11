@@ -1,14 +1,12 @@
-// src/usecases/CreateTask.ts
-
-import { prisma } from "../lib/db.js";
 import { PriorityLevel } from "../generated/prisma/enums.js";
+import { prisma } from "../lib/db.js";
 
 interface InputDto {
+  userId: string;
   title: string;
   description?: string;
   dueDate?: Date;
   priority: PriorityLevel;
-  userId: string;
   subjectId?: string;
 }
 

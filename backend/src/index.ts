@@ -130,6 +130,42 @@ app.withTypeProvider<ZodTypeProvider>().route({
   },
 });
 
+app.withTypeProvider<ZodTypeProvider>().route({
+  method: "POST",
+  url: "/tasks",
+  schema: {
+    body: z.object({
+      title: z.string().trim().min(1, "Título é obrigatório"),
+      description: z.string().optional(),
+      dueDate: z.string().datetime().optional(),
+      priority: z.enum(["LOW", "MEDIUM", "HIGH"]),
+      subjectId: z.string().optional(),
+    }),
+
+    response: {
+      201: z.object({
+        id: z.string(),
+        title: z.string(),
+        description: z.string().optional(),
+        completed: z.boolean(),
+        priority: z.enum(["LOW", "MEDIUM", "HIGH"]),
+      }),
+
+      400: z.object({
+        error: z.string(),
+        code: z.string(),
+      }),
+
+      401: z.object({
+        error: z.string(),
+        code: z.string(),
+      }),
+    },
+  },
+
+  handler: async (request, reply) => {},
+});
+
 try {
   await app.listen({
     port: Number(process.env.PORT),

@@ -14,7 +14,9 @@ import {
 } from "fastify-type-provider-zod";
 import z from "zod";
 
+import { PriorityLevel } from "./generated/prisma/enums.js";
 import { auth } from "./lib/auth.js";
+import { CreateTask } from "./usecases/CreateTask.js";
 
 const app = Fastify({
   logger: true,
@@ -146,7 +148,7 @@ app.withTypeProvider<ZodTypeProvider>().route({
       201: z.object({
         id: z.string(),
         title: z.string(),
-        description: z.string().optional(),
+        description: z.string().nullable(),
         completed: z.boolean(),
         priority: z.enum(["LOW", "MEDIUM", "HIGH"]),
       }),
@@ -160,10 +162,50 @@ app.withTypeProvider<ZodTypeProvider>().route({
         error: z.string(),
         code: z.string(),
       }),
+
+      500: z.object({
+        error: z.string(),
+        code: z.string(),
+      }),
     },
   },
 
-  handler: async (request, reply) => {},
+  handler: async (request, reply) => {
+    try {
+      const session = await auth.api.getSession({
+        headers: fromNodeHeaders(request.headers),
+      });
+
+      if (!session) {
+        return reply.status(401).send({
+          error: "Unauthorized",
+          code: "UNAUTHORIZED",
+        });
+      }
+
+      const createTask = new CreateTask();
+
+      const result = await createTask.execute({
+        userId: session.user.id,
+        title: request.body.title,
+        description: request.body.description,
+        dueDate: request.body.dueDate
+          ? new Date(request.body.dueDate)
+          : undefined,
+        priority: request.body.priority as PriorityLevel,
+        subjectId: request.body.subjectId,
+      });
+
+      return reply.status(201).send(result);
+    } catch (error) {
+      app.log.error(error);
+
+      return reply.status(500).send({
+        error: "Internal server error",
+        code: "INTERNAL_SERVER_ERROR",
+      });
+    }
+  },
 });
 
 try {

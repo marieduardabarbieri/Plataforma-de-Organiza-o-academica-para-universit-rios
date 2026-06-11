@@ -148,7 +148,7 @@ app.withTypeProvider<ZodTypeProvider>().route({
       201: z.object({
         id: z.string(),
         title: z.string(),
-        description: z.string().nullable(),
+        description: z.string().nullable().optional(),
         completed: z.boolean(),
         priority: z.enum(["LOW", "MEDIUM", "HIGH"]),
       }),

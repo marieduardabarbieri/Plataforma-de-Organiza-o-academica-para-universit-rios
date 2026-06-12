@@ -16,6 +16,7 @@ import z from "zod";
 
 import { PriorityLevel } from "./generated/prisma/enums.js";
 import { auth } from "./lib/auth.js";
+import { ErrorSchema, TaskSchema } from "./schemas/index.js";
 import { CreateTask } from "./usecases/CreateTask.js";
 
 const app = Fastify({
@@ -145,28 +146,13 @@ app.withTypeProvider<ZodTypeProvider>().route({
     }),
 
     response: {
-      201: z.object({
-        id: z.string(),
-        title: z.string(),
-        description: z.string().nullable().optional(),
-        completed: z.boolean(),
-        priority: z.enum(["LOW", "MEDIUM", "HIGH"]),
-      }),
+      201: TaskSchema,
 
-      400: z.object({
-        error: z.string(),
-        code: z.string(),
-      }),
+      400: ErrorSchema,
 
-      401: z.object({
-        error: z.string(),
-        code: z.string(),
-      }),
+      401: ErrorSchema,
 
-      500: z.object({
-        error: z.string(),
-        code: z.string(),
-      }),
+      500: ErrorSchema,
     },
   },
 

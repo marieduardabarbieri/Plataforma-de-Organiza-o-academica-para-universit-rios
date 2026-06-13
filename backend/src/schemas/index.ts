@@ -26,3 +26,12 @@ export const UpdateTaskSchema = z.object({
   title: z.string(),
   completed: z.boolean(),
 });
+
+export const GetTaskSchema = z.object({
+  id: z.string().uuid(),
+  title: z.string(),
+  description: z.string().optional(),
+  completed: z.boolean(),
+  priority: z.enum(["LOW", "MEDIUM", "HIGH"]),
+  dueDate: z.string().optional(),
+});

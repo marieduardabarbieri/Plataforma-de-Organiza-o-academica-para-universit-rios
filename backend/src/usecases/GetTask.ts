@@ -1,6 +1,6 @@
 // src/usecases/GetTask.ts
-
 import { NotFoundError } from "../errors/index.js";
+import { PriorityLevel } from "../generated/prisma/enums.js";
 import { prisma } from "../lib/db.js";
 
 interface InputDto {
@@ -13,7 +13,7 @@ interface OutputDto {
   title: string;
   description?: string;
   completed: boolean;
-  priority: string;
+  priority: PriorityLevel;
   dueDate?: string;
 }
 

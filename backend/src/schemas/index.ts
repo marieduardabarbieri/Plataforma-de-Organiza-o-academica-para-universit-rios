@@ -16,3 +16,13 @@ export const TaskSchema = z.object({
   priority: z.enum(["LOW", "MEDIUM", "HIGH"]),
   subjectId: z.string().nullable(),
 });
+
+export const UpdateTaskBodySchema = z.object({
+  completed: z.boolean(),
+});
+
+export const UpdateTaskSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  completed: z.boolean(),
+});

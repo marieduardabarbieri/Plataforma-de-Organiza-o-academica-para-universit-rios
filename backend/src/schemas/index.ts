@@ -35,3 +35,20 @@ export const GetTaskSchema = z.object({
   priority: z.enum(["LOW", "MEDIUM", "HIGH"]),
   dueDate: z.string().optional(),
 });
+
+export const ListTasksQuerySchema = z.object({
+  completed: z
+    .enum(["true", "false"])
+    .transform((v) => v === "true")
+    .optional(),
+});
+
+export const ListTasksSchema = z.array(
+  z.object({
+    id: z.string().uuid(),
+    title: z.string(),
+    description: z.string().optional(),
+    completed: z.boolean(),
+    priority: z.enum(["LOW", "MEDIUM", "HIGH"]),
+  }),
+);

@@ -1,13 +1,6 @@
-export default function Home() {
-  return (
-    <main className="flex min-h-screen items-center justify-center">
-      <h1>Funcionando!</h1>
-    </main>
-  );
-}
-/*
 import { getTasks } from "@/_lib/api/fetch-generated";
 import { TaskCard } from "./_components/task-card";
+
 export default async function Home() {
   const response = await getTasks();
 
@@ -43,4 +36,3 @@ export default async function Home() {
     </main>
   );
 }
-*/

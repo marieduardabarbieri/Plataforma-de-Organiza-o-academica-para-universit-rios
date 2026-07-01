@@ -23,6 +23,10 @@ export const customFetch = async <T>(
   options: RequestInit,
 ): Promise<T> => {
   const requestUrl = getUrl(url);
+
+  console.log("URL:", requestUrl);
+  console.log("OPTIONS:", options);
+
   const requestHeaders = await getHeaders(options.headers);
 
   const requestInit: RequestInit = {
@@ -32,7 +36,11 @@ export const customFetch = async <T>(
   };
 
   const response = await fetch(requestUrl, requestInit);
+
+  console.log("STATUS:", response.status);
+
   const data = await getBody<T>(response);
+  console.log("BODY:", data);
 
   return { status: response.status, data, headers: response.headers } as T;
 };

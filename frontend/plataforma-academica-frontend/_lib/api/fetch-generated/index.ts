@@ -5,14 +5,14 @@
  * API para gerenciamento de tarefas, disciplinas e rotina acadêmica
  * OpenAPI spec version: 1.0.0
  */
-import { customFetch } from '../../fetch';
-export type PostTasksBodyPriority = typeof PostTasksBodyPriority[keyof typeof PostTasksBodyPriority];
-
+import { customFetch } from "../../fetch";
+export type PostTasksBodyPriority =
+  (typeof PostTasksBodyPriority)[keyof typeof PostTasksBodyPriority];
 
 export const PostTasksBodyPriority = {
-  LOW: 'LOW',
-  MEDIUM: 'MEDIUM',
-  HIGH: 'HIGH',
+  LOW: "LOW",
+  MEDIUM: "MEDIUM",
+  HIGH: "HIGH",
 } as const;
 
 export type PostTasksBody = {
@@ -25,13 +25,13 @@ export type PostTasksBody = {
   subjectId?: string;
 };
 
-export type PostTasks201Priority = typeof PostTasks201Priority[keyof typeof PostTasks201Priority];
-
+export type PostTasks201Priority =
+  (typeof PostTasks201Priority)[keyof typeof PostTasks201Priority];
 
 export const PostTasks201Priority = {
-  LOW: 'LOW',
-  MEDIUM: 'MEDIUM',
-  HIGH: 'HIGH',
+  LOW: "LOW",
+  MEDIUM: "MEDIUM",
+  HIGH: "HIGH",
 } as const;
 
 export type PostTasks201 = {
@@ -62,13 +62,13 @@ export type PostTasks500 = {
   code: string;
 };
 
-export type GetTasks200ItemPriority = typeof GetTasks200ItemPriority[keyof typeof GetTasks200ItemPriority];
-
+export type GetTasks200ItemPriority =
+  (typeof GetTasks200ItemPriority)[keyof typeof GetTasks200ItemPriority];
 
 export const GetTasks200ItemPriority = {
-  LOW: 'LOW',
-  MEDIUM: 'MEDIUM',
-  HIGH: 'HIGH',
+  LOW: "LOW",
+  MEDIUM: "MEDIUM",
+  HIGH: "HIGH",
 } as const;
 
 export type GetTasks200Item = {
@@ -90,13 +90,13 @@ export type GetTasks500 = {
   code: string;
 };
 
-export type GetTasksTaskId200Priority = typeof GetTasksTaskId200Priority[keyof typeof GetTasksTaskId200Priority];
-
+export type GetTasksTaskId200Priority =
+  (typeof GetTasksTaskId200Priority)[keyof typeof GetTasksTaskId200Priority];
 
 export const GetTasksTaskId200Priority = {
-  LOW: 'LOW',
-  MEDIUM: 'MEDIUM',
-  HIGH: 'HIGH',
+  LOW: "LOW",
+  MEDIUM: "MEDIUM",
+  HIGH: "HIGH",
 } as const;
 
 export type GetTasksTaskId200 = {
@@ -124,13 +124,13 @@ export type GetTasksTaskId500 = {
   code: string;
 };
 
-export type PatchTasksTaskIdComplete200Priority = typeof PatchTasksTaskIdComplete200Priority[keyof typeof PatchTasksTaskIdComplete200Priority];
-
+export type PatchTasksTaskIdComplete200Priority =
+  (typeof PatchTasksTaskIdComplete200Priority)[keyof typeof PatchTasksTaskIdComplete200Priority];
 
 export const PatchTasksTaskIdComplete200Priority = {
-  LOW: 'LOW',
-  MEDIUM: 'MEDIUM',
-  HIGH: 'HIGH',
+  LOW: "LOW",
+  MEDIUM: "MEDIUM",
+  HIGH: "HIGH",
 } as const;
 
 export type PatchTasksTaskIdComplete200 = {
@@ -166,296 +166,213 @@ export type Get200 = {
 };
 
 export type postTasksResponse201 = {
-  data: PostTasks201
-  status: 201
-}
+  data: PostTasks201;
+  status: 201;
+};
 
 export type postTasksResponse400 = {
-  data: PostTasks400
-  status: 400
-}
+  data: PostTasks400;
+  status: 400;
+};
 
 export type postTasksResponse401 = {
-  data: PostTasks401
-  status: 401
-}
+  data: PostTasks401;
+  status: 401;
+};
 
 export type postTasksResponse500 = {
-  data: PostTasks500
-  status: 500
-}
-
-export type postTasksResponseSuccess = (postTasksResponse201) & {
-  headers: Headers;
-};
-export type postTasksResponseError = (postTasksResponse400 | postTasksResponse401 | postTasksResponse500) & {
-  headers: Headers;
+  data: PostTasks500;
+  status: 500;
 };
 
-export type postTasksResponse = (postTasksResponseSuccess | postTasksResponseError)
+export type postTasksResponseSuccess = postTasksResponse201 & {
+  headers: Headers;
+};
+export type postTasksResponseError = (
+  postTasksResponse400 | postTasksResponse401 | postTasksResponse500
+) & {
+  headers: Headers;
+};
+
+export type postTasksResponse =
+  postTasksResponseSuccess | postTasksResponseError;
 
 export const getPostTasksUrl = () => {
+  return `/tasks/`;
+};
 
-
-
-
-  return `/tasks/`
-}
-
-export const postTasks = async (postTasksBody: PostTasksBody, options?: RequestInit): Promise<postTasksResponse> => {
-
-  return customFetch<postTasksResponse>(getPostTasksUrl(),
-  {
+export const postTasks = async (
+  postTasksBody: PostTasksBody,
+  options?: RequestInit,
+): Promise<postTasksResponse> => {
+  return customFetch<postTasksResponse>(getPostTasksUrl(), {
     ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(postTasksBody)
-  }
-);}
-
-
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(postTasksBody),
+  });
+};
 
 export type getTasksResponse200 = {
-  data: GetTasks200Item[]
-  status: 200
-}
+  data: GetTasks200Item[];
+  status: 200;
+};
 
 export type getTasksResponse401 = {
-  data: GetTasks401
-  status: 401
-}
+  data: GetTasks401;
+  status: 401;
+};
 
 export type getTasksResponse500 = {
-  data: GetTasks500
-  status: 500
-}
-
-export type getTasksResponseSuccess = (getTasksResponse200) & {
-  headers: Headers;
-};
-export type getTasksResponseError = (getTasksResponse401 | getTasksResponse500) & {
-  headers: Headers;
+  data: GetTasks500;
+  status: 500;
 };
 
-export type getTasksResponse = (getTasksResponseSuccess | getTasksResponseError)
+export type getTasksResponseSuccess = getTasksResponse200 & {
+  headers: Headers;
+};
+export type getTasksResponseError = (
+  getTasksResponse401 | getTasksResponse500
+) & {
+  headers: Headers;
+};
+
+export type getTasksResponse = getTasksResponseSuccess | getTasksResponseError;
 
 export const getGetTasksUrl = () => {
+  return `/tasks/`;
+};
 
-
-
-
-  return `/tasks/`
-}
-
-export const getTasks = async ( options?: RequestInit): Promise<getTasksResponse> => {
-
-  return customFetch<getTasksResponse>(getGetTasksUrl(),
-  {
+export const getTasks = async (
+  options?: RequestInit,
+): Promise<getTasksResponse> => {
+  return customFetch<getTasksResponse>(getGetTasksUrl(), {
     ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
+    method: "GET",
+  });
+};
 
 export type getTasksTaskIdResponse200 = {
-  data: GetTasksTaskId200
-  status: 200
-}
+  data: GetTasksTaskId200;
+  status: 200;
+};
 
 export type getTasksTaskIdResponse401 = {
-  data: GetTasksTaskId401
-  status: 401
-}
+  data: GetTasksTaskId401;
+  status: 401;
+};
 
 export type getTasksTaskIdResponse404 = {
-  data: GetTasksTaskId404
-  status: 404
-}
+  data: GetTasksTaskId404;
+  status: 404;
+};
 
 export type getTasksTaskIdResponse500 = {
-  data: GetTasksTaskId500
-  status: 500
-}
-
-export type getTasksTaskIdResponseSuccess = (getTasksTaskIdResponse200) & {
-  headers: Headers;
-};
-export type getTasksTaskIdResponseError = (getTasksTaskIdResponse401 | getTasksTaskIdResponse404 | getTasksTaskIdResponse500) & {
-  headers: Headers;
+  data: GetTasksTaskId500;
+  status: 500;
 };
 
-export type getTasksTaskIdResponse = (getTasksTaskIdResponseSuccess | getTasksTaskIdResponseError)
+export type getTasksTaskIdResponseSuccess = getTasksTaskIdResponse200 & {
+  headers: Headers;
+};
+export type getTasksTaskIdResponseError = (
+  | getTasksTaskIdResponse401
+  | getTasksTaskIdResponse404
+  | getTasksTaskIdResponse500
+) & {
+  headers: Headers;
+};
 
-export const getGetTasksTaskIdUrl = (taskId: string,) => {
+export type getTasksTaskIdResponse =
+  getTasksTaskIdResponseSuccess | getTasksTaskIdResponseError;
 
+export const getGetTasksTaskIdUrl = (taskId: string) => {
+  return `/tasks/${taskId}`;
+};
 
-
-
-  return `/tasks/${taskId}`
-}
-
-export const getTasksTaskId = async (taskId: string, options?: RequestInit): Promise<getTasksTaskIdResponse> => {
-
-  return customFetch<getTasksTaskIdResponse>(getGetTasksTaskIdUrl(taskId),
-  {
+export const getTasksTaskId = async (
+  taskId: string,
+  options?: RequestInit,
+): Promise<getTasksTaskIdResponse> => {
+  return customFetch<getTasksTaskIdResponse>(getGetTasksTaskIdUrl(taskId), {
     ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
+    method: "GET",
+  });
+};
 
 export type patchTasksTaskIdCompleteResponse200 = {
-  data: PatchTasksTaskIdComplete200
-  status: 200
-}
+  data: PatchTasksTaskIdComplete200;
+  status: 200;
+};
 
 export type patchTasksTaskIdCompleteResponse401 = {
-  data: PatchTasksTaskIdComplete401
-  status: 401
-}
+  data: PatchTasksTaskIdComplete401;
+  status: 401;
+};
 
 export type patchTasksTaskIdCompleteResponse404 = {
-  data: PatchTasksTaskIdComplete404
-  status: 404
-}
+  data: PatchTasksTaskIdComplete404;
+  status: 404;
+};
 
 export type patchTasksTaskIdCompleteResponse500 = {
-  data: PatchTasksTaskIdComplete500
-  status: 500
-}
-
-export type patchTasksTaskIdCompleteResponseSuccess = (patchTasksTaskIdCompleteResponse200) & {
-  headers: Headers;
-};
-export type patchTasksTaskIdCompleteResponseError = (patchTasksTaskIdCompleteResponse401 | patchTasksTaskIdCompleteResponse404 | patchTasksTaskIdCompleteResponse500) & {
-  headers: Headers;
+  data: PatchTasksTaskIdComplete500;
+  status: 500;
 };
 
-export type patchTasksTaskIdCompleteResponse = (patchTasksTaskIdCompleteResponseSuccess | patchTasksTaskIdCompleteResponseError)
-
-export const getPatchTasksTaskIdCompleteUrl = (taskId: string,) => {
-
-
-
-
-  return `/tasks/${taskId}/complete`
-}
-
-export const patchTasksTaskIdComplete = async (taskId: string, options?: RequestInit): Promise<patchTasksTaskIdCompleteResponse> => {
-
-  return customFetch<patchTasksTaskIdCompleteResponse>(getPatchTasksTaskIdCompleteUrl(taskId),
-  {
-    ...options,
-    method: 'PATCH'
-
-
-  }
-);}
-
-
-
-export type getApiAuthResponse200 = {
-  data: void
-  status: 200
-}
-
-export type getApiAuthResponseSuccess = (getApiAuthResponse200) & {
+export type patchTasksTaskIdCompleteResponseSuccess =
+  patchTasksTaskIdCompleteResponse200 & {
+    headers: Headers;
+  };
+export type patchTasksTaskIdCompleteResponseError = (
+  | patchTasksTaskIdCompleteResponse401
+  | patchTasksTaskIdCompleteResponse404
+  | patchTasksTaskIdCompleteResponse500
+) & {
   headers: Headers;
 };
-;
 
-export type getApiAuthResponse = (getApiAuthResponseSuccess)
+export type patchTasksTaskIdCompleteResponse =
+  | patchTasksTaskIdCompleteResponseSuccess
+  | patchTasksTaskIdCompleteResponseError;
 
-export const getGetApiAuthUrl = (: string,) => {
-
-
-
-
-  return `/api/auth/${}`
-}
-
-export const getApiAuth = async (: string, options?: RequestInit): Promise<getApiAuthResponse> => {
-
-  return customFetch<getApiAuthResponse>(getGetApiAuthUrl(),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
-
-export type postApiAuthResponse200 = {
-  data: void
-  status: 200
-}
-
-export type postApiAuthResponseSuccess = (postApiAuthResponse200) & {
-  headers: Headers;
+export const getPatchTasksTaskIdCompleteUrl = (taskId: string) => {
+  return `/tasks/${taskId}/complete`;
 };
-;
 
-export type postApiAuthResponse = (postApiAuthResponseSuccess)
-
-export const getPostApiAuthUrl = (: string,) => {
-
-
-
-
-  return `/api/auth/${}`
-}
-
-export const postApiAuth = async (: string, options?: RequestInit): Promise<postApiAuthResponse> => {
-
-  return customFetch<postApiAuthResponse>(getPostApiAuthUrl(),
-  {
-    ...options,
-    method: 'POST'
-
-
-  }
-);}
-
-
+export const patchTasksTaskIdComplete = async (
+  taskId: string,
+  options?: RequestInit,
+): Promise<patchTasksTaskIdCompleteResponse> => {
+  return customFetch<patchTasksTaskIdCompleteResponse>(
+    getPatchTasksTaskIdCompleteUrl(taskId),
+    {
+      ...options,
+      method: "PATCH",
+    },
+  );
+};
 
 export type getResponse200 = {
-  data: Get200
-  status: 200
-}
+  data: Get200;
+  status: 200;
+};
 
-export type getResponseSuccess = (getResponse200) & {
+export type getResponseSuccess = getResponse200 & {
   headers: Headers;
 };
-;
-
-export type getResponse = (getResponseSuccess)
+export type getResponse = getResponseSuccess;
 
 export const getGetUrl = () => {
-
-
-
-
-  return `/`
-}
+  return `/`;
+};
 
 /**
  * Hello World
  */
-export const get = async ( options?: RequestInit): Promise<getResponse> => {
-
-  return customFetch<getResponse>(getGetUrl(),
-  {
+export const get = async (options?: RequestInit): Promise<getResponse> => {
+  return customFetch<getResponse>(getGetUrl(), {
     ...options,
-    method: 'GET'
-
-
-  }
-);}
+    method: "GET",
+  });
+};

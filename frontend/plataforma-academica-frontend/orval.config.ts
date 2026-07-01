@@ -12,6 +12,7 @@ export default defineConfig({
       filters: {
         mode: "exclude",
         tags: ["default"],
+        paths: ["/api/auth/{*any}"],
       },
     },
     output: {

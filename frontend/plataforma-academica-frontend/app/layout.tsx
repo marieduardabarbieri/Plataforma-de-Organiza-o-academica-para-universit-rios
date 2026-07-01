@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter_Tight } from "next/font/google";
 import "./globals.css";
-import { cn } from "@/lib/utils";
+import { cn } from "@/_lib/utils";
 
 const interTight = Inter_Tight({ subsets: ["latin"], variable: "--font-sans" });
 
